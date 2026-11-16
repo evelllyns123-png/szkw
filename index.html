@@ -1,641 +1,165 @@
+
 <!DOCTYPE html>
-
 <html lang="zh-CN">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>QuietTrace · X Account Analyzer</title>
-
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>X Visitor Monitor</title>
 <style>
-
-:root {
-
-  --bg: #0b0d13;
-
-  --panel: #141823;
-
-  --line: #252b3a;
-
-  --text: #f2f3f8;
-
-  --muted: #8992a6;
-
-  --accent: #a99bff;
-
-  --green: #78d9b0;
-
-  --red: #ff8e9b;
-
-}
-
-* { box-sizing: border-box; }
-
-body {
-
-  margin: 0;
-
-  background: var(--bg);
-
-  color: var(--text);
-
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-
-}
-
-main {
-
-  max-width: 850px;
-
-  margin: auto;
-
-  padding: 38px 20px 70px;
-
-}
-
-header { margin-bottom: 34px; }
-
-.logo {
-
-  font-size: 13px;
-
-  letter-spacing: 4px;
-
-  color: var(--accent);
-
-}
-
-h1 { font-size: 34px; margin: 13px 0 8px; }
-
-.subtitle {
-
-  color: var(--muted);
-
-  font-size: 14px;
-
-  line-height: 1.7;
-
-}
-
-.panel {
-
-  background: var(--panel);
-
-  border: 1px solid var(--line);
-
-  border-radius: 18px;
-
-  padding: 22px;
-
-  margin-bottom: 17px;
-
-}
-
-.label {
-
-  font-size: 12px;
-
-  color: var(--muted);
-
-  margin-bottom: 10px;
-
-}
-
-.inputrow { display: flex; gap: 10px; }
-
-input {
-
-  flex: 1;
-
-  min-width: 0;
-
-  background: #0d111b;
-
-  border: 1px solid var(--line);
-
-  border-radius: 10px;
-
-  padding: 14px;
-
-  color: white;
-
-  font-size: 15px;
-
-  outline: none;
-
-}
-
-input:focus { border-color: var(--accent); }
-
-button {
-
-  border: 0;
-
-  border-radius: 10px;
-
-  padding: 0 20px;
-
-  background: var(--accent);
-
-  color: #11101b;
-
-  font-weight: 700;
-
-  font-size: 14px;
-
-  cursor: pointer;
-
-}
-
-button:disabled { opacity: .5; cursor: wait; }
-
-.notice {
-
-  background: #211e35;
-
-  border: 1px solid #383153;
-
-  color: #c8c0ff;
-
-  border-radius: 12px;
-
-  padding: 14px;
-
-  font-size: 13px;
-
-  line-height: 1.7;
-
-}
-
-.status {
-
-  font-size: 13px;
-
-  color: var(--muted);
-
-  margin-top: 14px;
-
-}
-
-.profile { display: flex; align-items: center; gap: 16px; }
-
-.avatar {
-
-  width: 72px;
-
-  height: 72px;
-
-  border-radius: 50%;
-
-  object-fit: cover;
-
-  background: #252b3a;
-
-}
-
-.name { font-size: 20px; font-weight: 700; }
-
-.handle { color: var(--muted); font-size: 13px; margin-top: 5px; }
-
-.bio {
-
-  font-size: 14px;
-
-  line-height: 1.7;
-
-  color: #c4cad8;
-
-  margin-top: 16px;
-
-}
-
-.stats {
-
-  display: grid;
-
-  grid-template-columns: repeat(3, 1fr);
-
-  gap: 10px;
-
-  margin-top: 20px;
-
-}
-
-.stat {
-
-  background: #0d111b;
-
-  padding: 15px;
-
-  border-radius: 12px;
-
-}
-
-.stat strong { display: block; font-size: 22px; margin-bottom: 5px; }
-
-.stat span { font-size: 11px; color: var(--muted); }
-
-.section-title { font-size: 17px; font-weight: 700; margin-bottom: 16px; }
-
-.post {
-
-  border-top: 1px solid var(--line);
-
-  padding: 16px 0;
-
-  font-size: 14px;
-
-  line-height: 1.7;
-
-  overflow-wrap: anywhere;
-
-}
-
-.post:first-of-type { border-top: 0; }
-
-.post-meta { font-size: 12px; color: var(--muted); margin-top: 9px; }
-
-.post a { color: var(--accent); text-decoration: none; }
-
-.empty { color: var(--muted); font-size: 13px; line-height: 1.8; }
-
-.hidden { display: none; }
-
-footer {
-
-  text-align: center;
-
-  color: #626b7e;
-
-  font-size: 11px;
-
-  margin-top: 35px;
-
-}
-
-@media (max-width: 520px) {
-
-  h1 { font-size: 28px; }
-
-  .inputrow { flex-direction: column; }
-
-  button { padding: 14px; }
-
-  .stats { grid-template-columns: repeat(2, 1fr); }
-
-}
-
+*{box-sizing:border-box}
+body{margin:0;background:#10131b;color:#f4f5f8;font-family:Arial,sans-serif;padding:22px}
+main{max-width:760px;margin:auto}
+h1{font-size:26px}
+p{color:#9da6b7;line-height:1.6}
+.card{background:#1b2130;border:1px solid #30394d;border-radius:15px;padding:18px;margin:16px 0}
+input,button{width:100%;padding:13px;border-radius:9px;border:1px solid #39445a;background:#111725;color:white;margin-top:9px;font-size:15px}
+button{background:#527cff;border:0;font-weight:bold;cursor:pointer}
+button.secondary{background:#30394d}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.stat{background:#252e40;border-radius:12px;padding:15px}
+.num{font-size:25px;font-weight:bold;margin-top:8px}
+.item{border-bottom:1px solid #30394d;padding:12px 0;overflow-wrap:anywhere}
+small{color:#9da6b7}
+a{color:#8eafff}
 </style>
-
 </head>
-
 <body>
-
 <main>
+<h1> X Visitor Monitor</h1>
+<p>专属链接访问监测面板。记录真实点击，不将点击者冒充为 X 帖子浏览者。</p>
 
-<header>
-
-  <div class="logo">QUIETTRACE / 01</div>
-
-  <h1>X Account Analyzer</h1>
-
-  <div class="subtitle">
-
-    公开账号资料 · 帖子分析 · 互动数据<br>
-
-    Analyze public activity, not imaginary visitors.
-
-  </div>
-
-</header>
-
-<section class="panel">
-
-  <div class="label">X USERNAME</div>
-
-  <div class="inputrow">
-
-    <input id="username" placeholder="输入 X 用户名，例如 elonmusk">
-
-    <button id="searchBtn" onclick="analyze()">开始分析</button>
-
-  </div>
-
-  <div class="status" id="status">等待输入账号</div>
-
-</section>
-
-<div class="notice">
-
-  <strong>关于访客数据</strong><br>
-
-  X 不向第三方提供浏览某条帖子或主页的具体用户名单。
-
-  本工具不会把点赞者、粉丝或回复者冒充成访客。
-
+<div class="card">
+<h3>创建监测链接</h3>
+<input id="post" placeholder="输入 X 帖子链接">
+<input id="label" placeholder="备注，例如 Post 01">
+<button onclick="createLink()">生成监测链接</button>
+<div id="generated"></div>
 </div>
 
-<section id="profileSection" class="panel hidden">
+<div class="stats">
+<div class="stat"><small>总访问次数</small><div class="num" id="total">0</div></div>
+<div class="stat"><small>不同浏览器标识</small><div class="num" id="unique">0</div></div>
+</div>
 
-  <div class="section-title">账号资料</div>
+<div class="card">
+<h3>访问记录</h3>
+<div id="records">暂无访问记录</div>
+<button class="secondary" onclick="exportData()">导出 CSV</button>
+<button class="secondary" onclick="clearData()">清空本地记录</button>
+</div>
 
-  <div class="profile">
-
-    <img id="avatar" class="avatar" alt="头像">
-
-    <div>
-
-      <div class="name" id="displayName"></div>
-
-      <div class="handle" id="handle"></div>
-
-    </div>
-
-  </div>
-
-  <div class="bio" id="bio"></div>
-
-  <div class="stats">
-
-    <div class="stat"><strong id="followers">—</strong><span>粉丝</span></div>
-
-    <div class="stat"><strong id="following">—</strong><span>关注</span></div>
-
-    <div class="stat"><strong id="tweets">—</strong><span>帖子数量</span></div>
-
-  </div>
-
-  <p>
-
-    <a id="profileLink" target="_blank" rel="noopener noreferrer"
-
-       style="color:var(--accent);font-size:13px">打开 X 主页 ↗</a>
-
-  </p>
-
-</section>
-
-<section id="postsSection" class="panel hidden">
-
-  <div class="section-title">最近公开帖子</div>
-
-  <div id="posts"></div>
-
-</section>
-
-<section class="panel">
-
-  <div class="section-title">数据范围</div>
-
-  <div class="empty">
-
-    <p><span style="color:var(--green)">●</span> 可以获取：公开账号资料、公开帖子、可访问的互动统计。</p>
-
-    <p><span style="color:var(--red)">●</span> 无法获取：谁偷偷浏览了主页、谁看过某条帖子、匿名访客的真实身份。</p>
-
-    <p>数据是否完整取决于 X API 权限、账号隐私设置和 API 使用限制。</p>
-
-  </div>
-
-</section>
-
-<footer>QUIETTRACE · PUBLIC DATA ANALYSIS · 2026</footer>
-
+<div class="card">
+<h3>说明</h3>
+<p>访问者通过你的专属链接进入时，页面会记录时间、浏览器、设备类型和来源。数据保存在当前浏览器中。</p>
+<p>不会获取访问者的 X 用户名、头像或真实身份，也无法统计没有点击链接的帖子浏览者。</p>
+</div>
 </main>
 
 <script>
-
-const API_BASE = "https://api.x.com/2";
-
-function formatNumber(n) {
-
-  return Number(n || 0).toLocaleString("zh-CN");
-
+const KEY="x_monitor_records_v1";
+function getRecords(){
+ try{return JSON.parse(localStorage.getItem(KEY)||"[]")}
+ catch(e){return []}
 }
-
-function setStatus(message) {
-
-  document.getElementById("status").textContent = message;
-
+function saveRecords(data){
+ localStorage.setItem(KEY,JSON.stringify(data));
 }
-
-async function analyze() {
-
-  const username = document.getElementById("username")
-
-    .value.trim().replace(/^@/, "");
-
-  if (!/^[A-Za-z0-9_]{1,15}$/.test(username)) {
-
-    setStatus("请输入有效的 X 用户名。");
-
-    return;
-
-  }
-
-  const token = prompt(
-
-    "请输入你自己的 X API Bearer Token。\n" +
-
-    "Token 仅用于本次浏览器请求，不要把它提交到 GitHub。"
-
-  );
-
-  if (!token || !token.trim()) {
-
-    setStatus("未提供 API Token，无法查询实时数据。");
-
-    return;
-
-  }
-
-  const button = document.getElementById("searchBtn");
-
-  button.disabled = true;
-
-  setStatus("正在查询 X 公开数据……");
-
-  try {
-
-    const headers = {
-
-      "Authorization": "Bearer " + token.trim()
-
-    };
-
-    const userUrl = API_BASE + "/users/by/username/" +
-
-      encodeURIComponent(username) +
-
-      "?user.fields=profile_image_url,description,public_metrics,created_at";
-
-    const userResponse = await fetch(userUrl, { headers });
-
-    const userResult = await userResponse.json();
-
-    if (!userResponse.ok) {
-
-      throw new Error(
-
-        userResult.detail ||
-
-        userResult.title ||
-
-        userResult.error ||
-
-        "查询失败，HTTP " + userResponse.status
-
-      );
-
-    }
-
-    const user = userResult.data;
-
-    if (!user) throw new Error("没有找到这个公开账号。");
-
-    document.getElementById("avatar").src =
-
-      (user.profile_image_url || "").replace("_normal", "_400x400");
-
-    document.getElementById("displayName").textContent = user.name || "";
-
-    document.getElementById("handle").textContent = "@" + user.username;
-
-    document.getElementById("bio").textContent =
-
-      user.description || "该账号没有公开简介。";
-
-    const metrics = user.public_metrics || {};
-
-    document.getElementById("followers").textContent =
-
-      formatNumber(metrics.followers_count);
-
-    document.getElementById("following").textContent =
-
-      formatNumber(metrics.following_count);
-
-    document.getElementById("tweets").textContent =
-
-      formatNumber(metrics.tweet_count);
-
-    document.getElementById("profileLink").href =
-
-      "https://x.com/" + encodeURIComponent(user.username);
-
-    document.getElementById("profileSection").classList.remove("hidden");
-
-    document.getElementById("postsSection").classList.add("hidden");
-
-    setStatus("账号资料查询成功，正在查询最近公开帖子……");
-
-    const postsUrl = API_BASE + "/users/" + encodeURIComponent(user.id) +
-
-      "/tweets?max_results=10&tweet.fields=created_at,public_metrics,conversation_id";
-
-    const postsResponse = await fetch(postsUrl, { headers });
-
-    const postsResult = await postsResponse.json();
-
-    if (!postsResponse.ok) {
-
-      throw new Error(
-
-        postsResult.detail ||
-
-        postsResult.title ||
-
-        "账号资料已取得，但帖子查询失败。"
-
-      );
-
-    }
-
-    const posts = postsResult.data || [];
-
-    const container = document.getElementById("posts");
-
-    container.replaceChildren();
-
-    if (posts.length === 0) {
-
-      container.textContent = "没有取得可显示的公开帖子。";
-
-    }
-
-    posts.forEach(post => {
-
-      const item = document.createElement("div");
-
-      item.className = "post";
-
-      const content = document.createElement("div");
-
-      content.textContent = post.text;
-
-      const meta = document.createElement("div");
-
-      meta.className = "post-meta";
-
-      const m = post.public_metrics || {};
-
-      meta.textContent =
-
-        (post.created_at ? new Date(post.created_at).toLocaleString() : "") +
-
-        " · 浏览量：" + formatNumber(m.impression_count) +
-
-        " · 点赞：" + formatNumber(m.like_count) +
-
-        " · 回复：" + formatNumber(m.reply_count) +
-
-        " · 转发：" + formatNumber(m.retweet_count);
-
-      const link = document.createElement("a");
-
-      link.href = "https://x.com/" + encodeURIComponent(user.username) +
-
-        "/status/" + encodeURIComponent(post.id);
-
-      link.target = "_blank";
-
-      link.rel = "noopener noreferrer";
-
-      link.textContent = "在 X 查看帖子 ↗";
-
-      item.append(content, meta, link);
-
-      container.appendChild(item);
-
-    });
-
-    document.getElementById("postsSection").classList.remove("hidden");
-
-    setStatus("分析完成。以上均为 X API 返回的公开数据。");
-
-  } catch (error) {
-
-    setStatus("查询失败：" + error.message);
-
-  } finally {
-
-    button.disabled = false;
-
-  }
-
+function device(){
+ const ua=navigator.userAgent;
+ if(/iPhone|Android|Mobile/i.test(ua))return "Mobile";
+ if(/iPad|Tablet/i.test(ua))return "Tablet";
+ return "Desktop";
 }
-
-document.getElementById("username").addEventListener("keydown", event => {
-
-  if (event.key === "Enter") analyze();
-
-});
-
+function createLink(){
+ const post=document.getElementById("post").value.trim();
+ const label=document.getElementById("label").value.trim()||"未命名帖子";
+ if(!/^https:\/\/(www\.)?(x\.com|twitter\.com)\//i.test(post)){
+  alert("请输入有效的 X 帖子链接");
+  return;
+ }
+ const url=new URL(location.href);
+ url.searchParams.set("monitor",encodeURIComponent(label));
+ url.searchParams.set("post",post);
+ document.getElementById("generated").innerHTML=
+  '<div class="item">监测链接：<br><a href="'+
+  url.href.replace(/&/g,"&amp;")+'">'+
+  url.href+'</a></div>';
+}
+function track(){
+ const params=new URLSearchParams(location.search);
+ if(!params.has("monitor"))return;
+ const records=getRecords();
+ const id=crypto.randomUUID?crypto.randomUUID():
+  String(Date.now())+Math.random();
+ records.push({
+  id:id,
+  label:params.get("monitor"),
+  post:params.get("post")||"",
+  time:new Date().toISOString(),
+  device:device(),
+  browser:navigator.userAgent,
+  referrer:document.referrer||"Direct",
+  visitorKey:getVisitorKey()
+ });
+ saveRecords(records);
+ document.body.innerHTML=
+ '<main><div class="card"><h2>正在打开原帖…</h2>'+
+ '<p>访问记录已保存。</p>'+
+ '<a href="'+encodeURI(params.get("post")||"https://x.com")+
+ '">点击前往 X</a></div></main>';
+}
+function getVisitorKey(){
+ let key=localStorage.getItem("monitor_visitor_key");
+ if(!key){
+  key=crypto.randomUUID?crypto.randomUUID():
+   String(Date.now())+Math.random();
+  localStorage.setItem("monitor_visitor_key",key);
+ }
+ return key;
+}
+function render(){
+ const records=getRecords();
+ document.getElementById("total").textContent=records.length;
+ document.getElementById("unique").textContent=
+  new Set(records.map(x=>x.visitorKey)).size;
+ const el=document.getElementById("records");
+ if(!records.length){el.textContent="暂无访问记录";return}
+ el.innerHTML=records.slice().reverse().map(x=>
+  '<div class="item"><b>'+escapeHTML(x.label)+'</b><br>'+
+  '<small>'+new Date(x.time).toLocaleString()+
+  ' · '+escapeHTML(x.device)+'</small><br>'+
+  '<small>来源：'+escapeHTML(x.referrer)+'</small><br>'+
+  '<small>浏览器：'+escapeHTML(x.browser)+'</small><br>'+
+  '<a href="'+escapeHTML(x.post)+'" target="_blank">查看原帖</a></div>'
+ ).join("");
+}
+function escapeHTML(s){
+ return String(s).replace(/[&<>"']/g,c=>({
+  "&":"&amp;","<":"&lt;",">":"&gt;",
+  '"':"&quot;","'":"&#39;"
+ })[c]);
+}
+function exportData(){
+ const rows=getRecords();
+ if(!rows.length){alert("暂无数据");return}
+ const cols=["label","post","time","device","browser","referrer"];
+ const csv=[cols.join(","),...rows.map(r=>
+  cols.map(c=>'"'+String(r[c]||"").replace(/"/g,'""')+'"').join(",")
+ )].join("\n");
+ const a=document.createElement("a");
+ a.href=URL.createObjectURL(new Blob(["\uFEFF"+csv],
+  {type:"text/csv;charset=utf-8"}));
+ a.download="visitor-records.csv";
+ a.click();
+ URL.revokeObjectURL(a.href);
+}
+function clearData(){
+ if(confirm("确定清空本浏览器的所有记录？")){
+  saveRecords([]);render();
+ }
+}
+track();
+render();
 </script>
-
 </body>
-
 </html>
